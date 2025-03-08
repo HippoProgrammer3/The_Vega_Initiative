@@ -1,8 +1,3 @@
 from pyscript import display
 
-# Example: Store buildings in a dictionary
-city = {"houses": 5, "factories": 2}
-
-# Display city stats in browser console
-print("City Stats:", city)
-display(city)
+resources = {"power": 0, "wood": 0, "stone": 0, "insight": 0}
