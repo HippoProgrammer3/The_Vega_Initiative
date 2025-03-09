@@ -19,10 +19,11 @@ class material:
 
 
 class building:
-    def __init__(self, name, width, height, productionMaterial, workers, productionRate, productionQuantity, livingCapacity):
+    def __init__(self, reference, name, width, height, productionMaterial, workers, productionRate, productionQuantity, livingCapacity):
         self.name = name
         self.width = width
         self.height = height
+        self.reference = reference
         self.productionMaterial = productionMaterial
         self.workers = workers
         self.productionRate = productionRate
@@ -32,7 +33,20 @@ class building:
     def produce(self):
         self.productionMaterial.add(self.productionQuantity)
 
-
+class worker:
+    def __init__(self, name, reference, workplace, home, happiness, health, age, productivity):
+        self.name = name
+        self.reference = reference
+        self.workplace = workplace
+        self.home = home
+        self.happiness = happiness
+        self.productivity = productivity
+        self.health = health
+        self.age = age
+    
+    def move(self, workplace):
+        # Use A* algorithm once pull request is merged
+        self.workplace = workplace
 
 
 
