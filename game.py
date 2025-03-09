@@ -29,9 +29,13 @@ class building:
         self.productionRate = productionRate
         self.productionQuantity = productionQuantity
         self.livingCapacity = livingCapacity
+        self.maxWorkers = maxWorkers
     
     def produce(self):
-        self.productionMaterial.add(self.productionQuantity)
+        if self.workers == self.maxWorkers:
+            self.productionMaterial.add(self.productionQuantity)
+        else:
+            self.productionMaterial.add(self.productionQuantity*(self.workers/self.maxWorkers))
 
 class worker:
     def __init__(self, name, reference, workplace, home, happiness, health, age, productivity):
