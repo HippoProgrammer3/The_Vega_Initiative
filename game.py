@@ -19,7 +19,7 @@ class material:
 
 
 class building:
-    def __init__(self, name, width, height, productionMaterial, workers, productionRate, productionQuantity, livingCapacity):
+    def __init__(self, name, width, height, productionMaterial, workers, maxWorkers, productionRate, productionQuantity, livingCapacity):
         self.name = name
         self.width = width
         self.height = height
@@ -28,9 +28,13 @@ class building:
         self.productionRate = productionRate
         self.productionQuantity = productionQuantity
         self.livingCapacity = livingCapacity
+        self.maxWorkers = maxWorkers
     
     def produce(self):
-        self.productionMaterial.add(self.productionQuantity)
+        if self.workers == self.maxWorkers:
+            self.productionMaterial.add(self.productionQuantity)
+        else:
+            self.productionMaterial.add(self.productionQuantity*(self.workers/self.maxWorkers))
 
 
 
