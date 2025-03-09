@@ -19,15 +19,15 @@ class material:
 
 
 class building:
-    def __init__(self, name, width, height, productionMaterial, workers, productionRate, productionQuantity):
+    def __init__(self, name, width, height, productionMaterial, workers, productionRate, productionQuantity, livingCapacity):
         self.name = name
         self.width = width
         self.height = height
-        self.productionMaterial = material
+        self.productionMaterial = productionMaterial
         self.workers = workers
         self.productionRate = productionRate
         self.productionQuantity = productionQuantity
-
+        self.livingCapacity = livingCapacity
     
     def produce(self):
         self.productionMaterial.add(self.productionQuantity)
