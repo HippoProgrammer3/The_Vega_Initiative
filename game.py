@@ -8,6 +8,37 @@ world_width = 100
 world_height = 100
 tile_map = [["empty" for _ in range(world_width)] for _ in range(world_height)]
 
+class material:
+    def __init__(self, name, quantity):
+        self.name = name
+        self.quantity = quantity
+    
+    def add(self, quantity):
+        self.quantity += quantity
+
+
+
+class building:
+    def __init__(self, name, width, height, productionMaterial, workers, productionRate, productionQuantity):
+        self.name = name
+        self.width = width
+        self.height = height
+        self.productionMaterial = material
+        self.workers = workers
+        self.productionRate = productionRate
+        self.productionQuantity = productionQuantity
+
+    
+    def produce(self):
+        self.productionMaterial.add(self.productionQuantity)
+
+
+
+
+
+
+
+
 # Function to check if a building can be placed at (x, y)
 # building_width and building_height are in number of tiles.
 def can_place_building(x, y, building_width, building_height):
