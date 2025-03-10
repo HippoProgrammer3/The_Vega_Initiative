@@ -31,7 +31,7 @@ class material:
 
 
 class building:
-    def __init__(self, reference, name, width, height, productionMaterial, workers, productionRate, productionQuantity, livingCapacity):
+    def __init__(self, reference, name, width, height, productionMaterial, workers, maxWorkers, productionRate, productionQuantity, livingCapacity):
         self.name = name
         self.width = width
         self.height = height
