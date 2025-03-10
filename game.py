@@ -16,6 +16,18 @@ class material:
     def add(self, quantity):
         self.quantity += quantity
 
+    def canuUse(self, quantity):
+        if self.quantity >= quantity:
+            return True
+        else:
+            return False
+        
+    def use(self, quantity):
+        if self.canuUse(quantity):
+            return True
+        else:
+            return False
+
 
 
 class building:
