@@ -2,12 +2,6 @@
 import json
 from pyscript import display
 
-# Define a fixed (non-random) tile map for your city.
-# For simplicity, each tile is initially "empty".
-world_width = 100
-world_height = 100
-tile_map = [["empty" for _ in range(world_width)] for _ in range(world_height)]
-
 class material:
     def __init__(self, name, quantity):
         self.name = name
