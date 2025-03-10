@@ -1,6 +1,6 @@
 # game.py
-import json
 from pyscript import display
+from tilemap import Tilemap
 
 class material:
     def __init__(self, name, quantity):
@@ -24,8 +24,8 @@ class material:
 
 
 
-class building:
-    def __init__(self, reference, name, width, height, productionMaterial, workers, maxWorkers, productionRate, productionQuantity, livingCapacity):
+class workplace:
+    def __init__(self, reference, name, width, height, productionMaterial, workers, maxWorkers, productionRate, productionQuantity):
         self.name = name
         self.width = width
         self.height = height
@@ -34,7 +34,6 @@ class building:
         self.workers = workers
         self.productionRate = productionRate
         self.productionQuantity = productionQuantity
-        self.livingCapacity = livingCapacity
         self.maxWorkers = maxWorkers
     
     def produce(self):
@@ -42,6 +41,29 @@ class building:
             self.productionMaterial.add(self.productionQuantity)
         else:
             self.productionMaterial.add(self.productionQuantity*(self.workers/self.maxWorkers))
+
+class home:
+    def __init__(self, reference, name, width, height, residents, maxResidents):
+        self.name = name
+        self.width = width
+        self.height = height
+        self.reference = reference
+        self.residents = residents
+        self.maxResidents = maxResidents
+    
+    def addResident(self, resident):
+        if len(self.residents) < self.maxResidents:
+            self.residents.append(resident)
+        else:
+            print("Home is full")
+    
+    def removeResident(self, resident):
+        if resident in self.residents:
+            self.residents.remove(resident)
+        else:
+            print("Resident not found")
+
+
 
 class worker:
     def __init__(self, name, reference, workplace, home, happiness, health, age, productivity):
