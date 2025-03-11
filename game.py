@@ -1,6 +1,7 @@
 # game.py
 from pyscript import display
 from tilemap import Tilemap
+import random, math
 
 class material:
     def __init__(self, name, quantity):
@@ -76,6 +77,14 @@ class worker:
         self.health = health
         self.age = age
     
-    def move(self, workplace):
-        # Use A* algorithm once pull request is merged
-        self.workplace = workplace
+    def move(self, destination):
+        # Use A* Algorithm to pathfind
+    
+    def entertain(self):
+        destination = random.choice(entertainmentBuildings)
+        self.move(destination)
+
+
+entertainmentBuildings = []
+workplaces = []
+homes = []
