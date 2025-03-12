@@ -1,3 +1,5 @@
+# Fully implemented by SuitablyMysterious - despite commit being from pygame port by HippoProgrammer
+
 import json
 
 class visualTilemap:
