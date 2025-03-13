@@ -97,6 +97,7 @@ class worker:
 
     def move(self, destination):
         # Use A* Algorithm to pathfind
+        return True
     
     def entertain(self):
         destination = random.choice(entertainmentBuildings)
