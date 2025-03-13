@@ -23,6 +23,25 @@ class material:
         else:
             return False
 
+class primaryMaterial(material):
+    def __init__(self, name:str, quantity:int, productionRate:int):
+        self.name = name
+        self.quantity = quantity
+
+class secondaryMaterial(material):
+    def __init__(self, name:str, quantity:int, requiredMaterials:dict):
+        self.name = name
+        self.quantity = quantity
+        self.requiredMaterials = requiredMaterials
+
+    def make(self):
+        for material, required_quantity in self.requiredMaterials.items():
+            if material.canuUse(required_quantity):
+                material.use(required_quantity)
+            else:
+                raise Exception("Not enough materials to make this item")
+        self.add(1)
+
 class building:
     def __init__(self, reference:hex, name:str, width:int, height:int, workers:list, maxWorkers:int):
         self.name = name
@@ -119,20 +138,25 @@ accumulator = 0.0
 game = True
 currentTime = time.time()
 
-# Define core materials
+# Define core, primary materials
 
-wood = material("wood", 0)
-stone = material("stone", 0)
-food = material("food", 0)
-water = material("water", 0)
-iron = material("iron", 0)
-sulpur = material("sulpur", 0)
-copper = material("copper", 0)
-oil = material("oil", 0)
-gas = material("gas", 0)
-sand = material("sand", 0)
-alien_biology = material("alien_biology", 0)
-earth_biology = material("earth_biology", 0)
+wood = primaryMaterial("wood", 0, 0)
+stone = primaryMaterial("stone", 0, 0)
+food = primaryMaterial("food", 0, 0)
+water = primaryMaterial("water", 0, 0)
+iron = primaryMaterial("iron", 0, 0)
+sulpur = primaryMaterial("sulpur", 0, 0)
+copper = primaryMaterial("copper", 0, 0)
+oil = primaryMaterial("oil", 0, 0)
+gas = primaryMaterial("gas", 0, 0)
+sand = primaryMaterial("sand", 0, 0)
+alien_biology = primaryMaterial("alien_biology", 0, 0)
+earth_biology = primaryMaterial("earth_biology", 0, 0)
+silicon = primaryMaterial("silicon", 0, 0)
+
+# Define secondary materials
+
+concrete = secondaryMaterial("concrete", 0, {sand: 2, water: 1, sulpur: 1})
 
 while game:
     currentTime = time.time()
