@@ -1,7 +1,7 @@
 # game.py
 from pyscript import display
 from tilemap import Tilemap
-import random, math, time
+import random, math, time, pygame
 
 class material:
     def __init__(self, name:str, quantity:int):
@@ -23,9 +23,14 @@ class material:
         else:
             return False
 
+class building:
+    def __init__(self, reference:hex, name:str, width:int, height:int, workers:list, maxWorkers:int):
+        self.name = name
+        self.width = width
+        self.height = height
+        self.reference = reference
 
-
-class workplace:
+class workplace(building):
     def __init__(self, reference:hex, name:str, width:int, height:int, productionMaterial:material, workers:list, maxWorkers:int, productionRate:int, productionQuantity:int):
         self.name = name
         self.width = width
@@ -43,7 +48,7 @@ class workplace:
         else:
             self.productionMaterial.add(self.productionQuantity*(self.workers/self.maxWorkers))
 
-class home:
+class home(building):
     def __init__(self, reference:hex, name:int, width:int, height:int, residents:list, maxResidents:int):
         self.name = name
         self.width = width
