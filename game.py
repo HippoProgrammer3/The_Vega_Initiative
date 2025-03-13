@@ -1,7 +1,7 @@
 # game.py
 from pyscript import display
 from tilemap import Tilemap
-import random, math
+import random, math, time
 
 class material:
     def __init__(self, name:str, quantity:int):
@@ -107,3 +107,17 @@ workplaces = []
 homes = []
 citisens = []
 numCitisens = citisens.len()
+lastTime = time.time()
+timeStep = 1/60
+accumulator = 0.0
+game = True
+currentTime = time.time()
+
+while game:
+    currentTime = time.time()
+    deltaTime = currentTime-lastTime
+    lastTime = currentTime
+    accumulator += deltaTime
+
+    while accumulator >= timeStep:
+        accumulator -= timeStep
