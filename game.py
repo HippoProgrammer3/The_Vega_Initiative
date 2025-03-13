@@ -4,7 +4,7 @@ from tilemap import Tilemap
 import random, math
 
 class material:
-    def __init__(self, name, quantity):
+    def __init__(self, name:str, quantity:int):
         self.name = name
         self.quantity = quantity
     
@@ -26,7 +26,7 @@ class material:
 
 
 class workplace:
-    def __init__(self, reference, name, width, height, productionMaterial, workers, maxWorkers, productionRate, productionQuantity):
+    def __init__(self, reference:hex, name:str, width:int, height:int, productionMaterial:material, workers:list, maxWorkers:int, productionRate:int, productionQuantity:int):
         self.name = name
         self.width = width
         self.height = height
@@ -44,7 +44,7 @@ class workplace:
             self.productionMaterial.add(self.productionQuantity*(self.workers/self.maxWorkers))
 
 class home:
-    def __init__(self, reference, name, width, height, residents, maxResidents):
+    def __init__(self, reference:hex, name:int, width:int, height:int, residents:list, maxResidents:int):
         self.name = name
         self.width = width
         self.height = height
@@ -64,10 +64,12 @@ class home:
         else:
             print("Resident not found")
 
-
+class statusWorker:
+    def __init__(self, name:str):
+        self.name = name
 
 class worker:
-    def __init__(self, name, reference, workplace, home, happiness, health, age, productivity):
+    def __init__(self, name:str, status:statusWorker, reference:hex, workplace:workplace, home:home, happiness:float, health:float, age:float, productivity:float):
         self.name = name
         self.reference = reference
         self.workplace = workplace
@@ -76,7 +78,18 @@ class worker:
         self.productivity = productivity
         self.health = health
         self.age = age
+        self.status = status
     
+    def assignHome(self):
+        if homes.len() > 1:
+            self.workplace = random.choice(homes)
+        else:
+            return("No available homes to assign to")
+    
+    def assignWorkplace(self, type):
+        if workplaces.len() > 1:
+            
+
     def move(self, destination):
         # Use A* Algorithm to pathfind
     
@@ -85,6 +98,12 @@ class worker:
         self.move(destination)
 
 
+
+
+
+
 entertainmentBuildings = []
 workplaces = []
 homes = []
+citisens = []
+numCitisens = citisens.len()
