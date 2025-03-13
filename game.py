@@ -119,6 +119,21 @@ accumulator = 0.0
 game = True
 currentTime = time.time()
 
+# Define core materials
+
+wood = material("wood", 0)
+stone = material("stone", 0)
+food = material("food", 0)
+water = material("water", 0)
+iron = material("iron", 0)
+sulpur = material("sulpur", 0)
+copper = material("copper", 0)
+oil = material("oil", 0)
+gas = material("gas", 0)
+sand = material("sand", 0)
+alien_biology = material("alien_biology", 0)
+earth_biology = material("earth_biology", 0)
+
 while game:
     currentTime = time.time()
     deltaTime = currentTime-lastTime
