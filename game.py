@@ -43,14 +43,14 @@ class secondaryMaterial(material):
         self.add(1)
 
 class building:
-    def __init__(self, reference:hex, name:str, width:int, height:int, workers:list, maxWorkers:int):
+    def __init__(self, reference:hex, name:str, width:int, height:int):
         self.name = name
         self.width = width
         self.height = height
         self.reference = reference
 
 class workplace(building):
-    def __init__(self, reference:hex, name:str, width:int, height:int, productionMaterial:material, workers:list, maxWorkers:int, productionRate:int, productionQuantity:int):
+    def __init__(self, reference:hex, name:str, width:int, height:int, productionMaterial:material, maxWorkers:int, productionRate:int, productionQuantity:int, workers:list=[]):
         self.name = name
         self.width = width
         self.height = height
@@ -68,7 +68,7 @@ class workplace(building):
             self.productionMaterial.add(self.productionQuantity*(self.workers/self.maxWorkers))
 
 class home(building):
-    def __init__(self, reference:hex, name:int, width:int, height:int, residents:list, maxResidents:int):
+    def __init__(self, reference:hex, name:int, width:int, height:int, maxResidents:int, residents:list=[]):
         self.name = name
         self.width = width
         self.height = height
