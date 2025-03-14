@@ -112,7 +112,7 @@ class worker:
     
     def assignWorkplace(self, type):
         if workplaces.len() > 1:
-            
+            pass
 
     def move(self, destination):
         # Use A* Algorithm to pathfind
