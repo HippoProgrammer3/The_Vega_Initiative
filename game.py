@@ -88,11 +88,26 @@ class home(building):
         else:
             print("Resident not found")
 
+class citizen:
+    def __init__(self, reference:hex, name:str, happiness:float=100, health:float=100, age:float=0, productivity:float=0):
+        self.name = name
+        self.happiness = happiness
+        self.health = health
+        self.age = age
+        self.productivity = productivity
+        self.reference = reference
+        citizens.append(self)
+    
+    def transferClass(self, newClass):
+        self.__class__ = newClass
+        
+
+
 class statusWorker:
     def __init__(self, name:str):
         self.name = name
 
-class worker:
+class worker(citizen):
     def __init__(self, name:str, status:statusWorker, reference:hex, workplace:workplace, home:home, happiness:float, health:float, age:float, productivity:float):
         self.name = name
         self.reference = reference
@@ -122,6 +137,24 @@ class worker:
         destination = random.choice(entertainmentBuildings)
         self.move(destination)
 
+class student(citizen):
+    def __init__(self, name:str, reference:hex, home:home, happiness:float, health:float, age:float, productivity:float):
+        self.name = name
+        self.reference = reference
+        self.home = home
+        self.happiness = happiness
+        self.health = health
+        self.age = age
+        self.productivity = productivity
+
+    def move(self, destination):
+        # Use A* Algorithm to pathfind
+        print(f"Moving {self.name} to {destination}")
+
+    def study(self):
+        destination = random.choice(workplaces)
+        self.move(destination)
+
 
 
 
@@ -130,8 +163,8 @@ class worker:
 entertainmentBuildings = []
 workplaces = []
 homes = []
-citisens = []
-numCitisens = citisens.len()
+citizens = []
+numCitisens = citizens.len()
 lastTime = time.time()
 timeStep = 1/60
 accumulator = 0.0
