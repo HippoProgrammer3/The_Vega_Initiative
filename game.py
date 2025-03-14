@@ -89,45 +89,38 @@ class home(building):
             print("Resident not found")
 
 class citizen:
-    def __init__(self, reference:hex, name:str, happiness:float=100, health:float=100, age:float=0, productivity:float=0):
+    def __init__(self, reference: hex, name: str, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0, home: 'home' = None):
         self.name = name
         self.happiness = happiness
         self.health = health
         self.age = age
         self.productivity = productivity
         self.reference = reference
+        self.home = home
         citizens.append(self)
     
     def transferClass(self, newClass):
         self.__class__ = newClass
-        
-
 
 class statusWorker:
     def __init__(self, name:str):
         self.name = name
 
 class worker(citizen):
-    def __init__(self, name:str, status:statusWorker, reference:hex, workplace:workplace, home:home, happiness:float, health:float, age:float, productivity:float):
-        self.name = name
-        self.reference = reference
+    def __init__(self, reference: hex, name: str, status: 'statusWorker', home: 'home' = None, workplace: 'workplace' = None, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0):
+        super().__init__(reference, name, happiness, health, age, productivity, home)
         self.workplace = workplace
-        self.home = home
-        self.happiness = happiness
-        self.productivity = productivity
-        self.health = health
-        self.age = age
         self.status = status
     
     def assignHome(self):
-        if homes.len() > 1:
+        if len(homes) > 1:
             self.workplace = random.choice(homes)
         else:
-            return("No available homes to assign to")
+            return "No available homes to assign to"
     
     def assignWorkplace(self, type):
-        if workplaces.len() > 1:
-            
+        if len(workplaces) > 1:
+            pass
 
     def move(self, destination):
         # Use A* Algorithm to pathfind
@@ -138,14 +131,8 @@ class worker(citizen):
         self.move(destination)
 
 class student(citizen):
-    def __init__(self, name:str, reference:hex, home:home, happiness:float, health:float, age:float, productivity:float):
-        self.name = name
-        self.reference = reference
-        self.home = home
-        self.happiness = happiness
-        self.health = health
-        self.age = age
-        self.productivity = productivity
+    def __init__(self, reference: hex, name: str, home: 'home' = None, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0):
+        super().__init__(reference, name, happiness, health, age, productivity, home)
 
     def move(self, destination):
         # Use A* Algorithm to pathfind
@@ -154,11 +141,6 @@ class student(citizen):
     def study(self):
         destination = random.choice(workplaces)
         self.move(destination)
-
-
-
-
-
 
 entertainmentBuildings = []
 workplaces = []
