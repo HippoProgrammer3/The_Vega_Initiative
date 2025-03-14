@@ -122,6 +122,9 @@ class worker:
         destination = random.choice(entertainmentBuildings)
         self.move(destination)
 
+def draw_cursor(x, y):
+    screen.blit(cursor, (x, y) )
+
 
 
 
@@ -132,11 +135,11 @@ workplaces = []
 homes = []
 citisens = []
 numCitisens = citisens.len()
-lastTime = time.time()
-timeStep = 1/60
 accumulator = 0.0
 game = True
-currentTime = time.time()
+FPS = 60
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
 # Define core, primary materials
 
@@ -158,11 +161,33 @@ silicon = primaryMaterial("silicon", 0, 0)
 
 concrete = secondaryMaterial("concrete", 0, {sand: 2, water: 1, sulpur: 1})
 
-while game:
-    currentTime = time.time()
-    deltaTime = currentTime-lastTime
-    lastTime = currentTime
-    accumulator += deltaTime
+# player cursor settings
+cursor = pygame.image.load("cursor.png")
+cursorX = 376
+cursorY = 480
+cursorX_change = 0
+cursorY_change = 0
 
-    while accumulator >= timeStep:
-        accumulator -= timeStep
+
+# main game loop
+while game:
+    for enent in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                cursorX_change = -1
+            if event.key == pygame.K_RIGHT:
+                cursorX_change = 1
+            if event.key == pygame.K_UP:
+                cursorY_change = -1
+            if event.key == pygame.K_DOWN:
+                cursorY_change = 1
+
+    # movement updates
+    cursorX += cursorX_change
+    cursorY += cursorY_change
+
+    # game updates
+    pygame.display.update()
+    clock.tick(FPS)
