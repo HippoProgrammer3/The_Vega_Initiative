@@ -1,7 +1,7 @@
 # game.py
 from pyscript import display
 from tilemap import Tilemap
-import random, math, time, pygame
+import random, math, time, pygame, asyncio
 
 class Material:
     def __init__(self, name:str, quantity:int):
@@ -50,7 +50,7 @@ class Building:
         self.reference = reference
 
 class Workplace(Building):
-    def __init__(self, reference:hex, name:str, width:int, height:int, productionMaterial:material, maxWorkers:int, productionRate:int, productionQuantity:int, workers:list=[]):
+    def __init__(self, reference:hex, name:str, width:int, height:int, productionMaterial:Material, maxWorkers:int, productionRate:int, productionQuantity:int, workers:list=[]):
         self.name = name
         self.width = width
         self.height = height
@@ -89,7 +89,7 @@ class Home(Building):
             print("Resident not found")
 
 class Citizen:
-    def __init__(self, reference: hex, name: str, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0, home: 'home' = None):
+    def __init__(self, reference: hex, name: str, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0, home:Home = None):
         self.name = name
         self.happiness = happiness
         self.health = health
@@ -107,7 +107,7 @@ class StatusWorker:
         self.name = name
 
 class Worker(Citizen):
-    def __init__(self, reference: hex, name: str, status: 'statusWorker', home: 'home' = None, workplace: 'workplace' = None, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0):
+    def __init__(self, reference: hex, name: str, status: 'StatusWorker', home:Home = None, workplace:Workplace = None, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0):
         super().__init__(reference, name, happiness, health, age, productivity, home)
         self.workplace = workplace
         self.status = status
@@ -132,7 +132,7 @@ class Worker(Citizen):
 
 
 class Student(Citizen):
-    def __init__(self, reference: hex, name: str, home: 'home' = None, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0):
+    def __init__(self, reference: hex, name: str, home:Home = None, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0):
         super().__init__(reference, name, happiness, health, age, productivity, home)
     
     def move(self, destination):
@@ -185,6 +185,7 @@ cursorX = 376
 cursorY = 480
 cursorX_change = 0
 cursorY_change = 0
+clock = pygame.time.Clock()
 
 
 # main game loop
