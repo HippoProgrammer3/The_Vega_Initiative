@@ -188,25 +188,30 @@ cursorY_change = 0
 clock = pygame.time.Clock()
 
 
-# main game loop
-while game:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            game = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                cursorX_change = -1
-            if event.key == pygame.K_RIGHT:
-                cursorX_change = 1
-            if event.key == pygame.K_UP:
-                cursorY_change = -1
-            if event.key == pygame.K_DOWN:
-                cursorY_change = 1
+# main game loop in async
 
-    # movement updates
-    cursorX += cursorX_change
-    cursorY += cursorY_change
+async def main():
+    
+    while game:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    cursorX_change = -1
+                if event.key == pygame.K_RIGHT:
+                    cursorX_change = 1
+                if event.key == pygame.K_UP:
+                    cursorY_change = -1
+                if event.key == pygame.K_DOWN:
+                    cursorY_change = 1
+        
+        # movement updates
+        cursorX += cursorX_change
+        cursorY += cursorY_change
+        await asyncio.sleep(0)
+        # game updates
+        pygame.display.update()
+        clock.tick(FPS)
 
-    # game updates
-    pygame.display.update()
-    clock.tick(FPS)
+asyncio.run(main())
