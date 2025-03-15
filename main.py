@@ -1,7 +1,13 @@
 # game.py
 from pyscript import display
 from tilemap import Tilemap
-import random, math, time, pygame, asyncio
+import random, math, time, pygame, asyncio, logging
+
+class MaterialException(Exception):
+    pass
+
+class BuildingException(Exception):
+    pass
 
 class Material:
     def __init__(self, name:str, quantity:int):
@@ -39,7 +45,7 @@ class SecondaryMaterial(Material):
             if material.canuUse(required_quantity):
                 material.use(required_quantity)
             else:
-                raise Exception("Not enough materials to make this item")
+                raise MaterialException("Not enough materials to make this item")
         self.add(1)
 
 class Building:
@@ -80,13 +86,13 @@ class Home(Building):
         if len(self.residents) < self.maxResidents:
             self.residents.append(resident)
         else:
-            print("Home is full")
+            raise BuildingException('Home is full')
     
     def removeResident(self, resident):
         if resident in self.residents:
             self.residents.remove(resident)
         else:
-            print("Resident not found")
+            raise BuildingException("Resident not found")
 
 class Citizen:
     def __init__(self, reference: hex, name: str, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0, home:Home = None):
@@ -101,6 +107,11 @@ class Citizen:
     
     def transferClass(self, newClass):
         self.__class__ = newClass
+    
+    def move(self, destination):
+        global logger
+        # Use A* Algorithm to pathfind
+        print(f"Moving {self.name} to {destination}")
 
 class StatusWorker:
     def __init__(self, name:str):
@@ -112,19 +123,15 @@ class Worker(Citizen):
         self.workplace = workplace
         self.status = status
     
-    def assignHome(self):
+    def assignHome(self,homes):
         if len(homes) > 1:
             self.workplace = random.choice(homes)
         else:
-            return "No available homes to assign to"
+            raise BuildingException("No available homes to assign to")
     
-    def assignWorkplace(self, type):
+    def assignWorkplace(self, type, workplaces):
         if len(workplaces) > 1:
             pass
-
-    def move(self, destination):
-        # Use A* Algorithm to pathfind
-        print(f"Moving {self.name} to {destination}")
     
     def entertain(self):
         destination = random.choice(entertainmentBuildings)
@@ -135,16 +142,16 @@ class Student(Citizen):
     def __init__(self, reference: hex, name: str, home:Home = None, happiness: float = 100, health: float = 100, age: float = 0, productivity: float = 0):
         super().__init__(reference, name, happiness, health, age, productivity, home)
     
-    def move(self, destination):
-        # Use A* Algorithm to pathfind
-        print(f"Moving {self.name} to {destination}")
-
     def study(self):
         destination = random.choice(workplaces)
         self.move(destination)
 
 def draw_cursor(x, y):
     screen.blit(cursor, (x, y) ) 
+
+logger = logging.getLogger(__name__)
+logger.info('THE VEGA INITIATIVE')
+logger.info('Game initialized, starting')
 
 entertainmentBuildings = []
 workplaces = []
@@ -158,6 +165,8 @@ game = True
 FPS = 60
 WIDTH, HEIGHT = 800, 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+logger.info('Screen initialized')
 
 # Define core, primary materials
 
@@ -179,6 +188,8 @@ silicon = PrimaryMaterial("silicon", 0, 0)
 
 concrete = SecondaryMaterial("concrete", 0, {sand: 2, water: 1, sulfur: 1})
 
+logger.info('Materials initialized')
+
 # player cursor settings
 cursor = pygame.image.load("cursor.png")
 cursorX = 376
@@ -187,14 +198,17 @@ cursorX_change = 0
 cursorY_change = 0
 clock = pygame.time.Clock()
 
+logger.info('Cursor initialized')
+logger.info('Clock initialized')
 
 # main game loop in async
 
 async def main():
-    
+    logger.info('Main function has been started')
     while game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                logger.info('Quit received, ending game loop')
                 game = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
