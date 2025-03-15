@@ -6,6 +6,6 @@
 ~~~
 2. navigate to its folder and run
 ~~~
-    python -m pip install requirements.txt
+    python -m pip install -r requirements.txt
     python -m pygbag main.py
 ~~~
