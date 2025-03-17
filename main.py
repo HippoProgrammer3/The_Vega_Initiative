@@ -205,6 +205,8 @@ logger.info('Clock initialized')
 
 async def main():
     logger.info('Main function has been started')
+    screen.fill('#4a06c9')
+    
     while game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -225,7 +227,7 @@ async def main():
         cursorY += cursorY_change
         await asyncio.sleep(0)
         # game updates
-        pygame.display.update()
+        pygame.display.flip()
         clock.tick(FPS)
 
 asyncio.run(main())
